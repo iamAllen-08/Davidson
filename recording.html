@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Expenses - Family Expense Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00b4d8 0%, #48cae4 50%, #ade8f4 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .user-info {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        .form-section {
+            padding: 40px 30px;
+            background: #f0f9ff;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0f2fe;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00b4d8;
+            box-shadow: 0 0 0 3px rgba(0,180,216,0.1);
+        }
+        .add-btn {
+            grid-column: 1 / -1;
+            padding: 18px;
+            background: linear-gradient(135deg, #00b4d8, #0096c7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,180,216,0.4);
+        }
+        .recent-section {
+            padding: 30px;
+            background: white;
+        }
+        .recent-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .recent-item {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #00b4d8;
+        }
+        .item-amount {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .item-category {
+            color: #0077b6;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        .nav-bar {
+            padding: 25px 30px;
+            background: #f0f9ff;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 12px 25px;
+            background: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            background: #0096c7;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .nav-bar { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Record New Expense</h1>
+            <div class="user-info">Logged in as: Family Member</div>
+        </header>
+        
+        <section class="form-section">
+            <form action="#" method="post">
+                <div class="form-grid">
+                    <input type="text" name="expense-name" placeholder="What did you buy? (Groceries, Petrol, etc.)" required>
+                    <input type="number" name="amount" placeholder="₹ Amount (e.g. 250)" step="0.01" required>
+                    <select name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Groceries">🛒 Groceries</option>
+                        <option value="EMI">🏦 EMI/Loans</option>
+                        <option value="UPI">💳 UPI/Digital</option>
+                        <option value="Cash">💵 Cash</option>
+                        <option value="Fuel">⛽ Fuel/Petrol</option>
+                        <option value="School">📚 School/Kids</option>
+                        <option value="Other">📋 Other</option>
+                    </select>
+                    <input type="date" name="date" value="">
+                    <button type="submit" class="add-btn">➕ Add Expense</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="recent-section">
+            <h2 class="recent-title">Recent Entries</h2>
+            <div class="recent-grid">
+                <div class="recent-item">
+                    <div class="item-amount">₹2,500</div>
+                    <div class="item-category">🛒 Groceries</div>
+                    <div style="color: #666; font-size: 14px;">Weekly shopping - 2026-03-20</div>
+                </div>
+                <div class="recent-item">
+                    <div class="item-amount">₹1,200</div>
+                    <div class="item-category">⛽ Fuel</div>
+                    <div style="color: #666; font-size: 14px;">Petrol fill-up - Today</div>
+                </div>
+                <div class="recent-item">
+                    <div class="item-amount">₹5,000</div>
+                    <div class="item-category">📚 School</div>
+                    <div style="color: #666; font-size: 14px;">Monthly fees - 2026-03-22</div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="nav-bar">
+            <a href="records.html" class="nav-btn">📈 View All Records</a>
+            <a href="welcome.html" class="nav-btn">🏠 Home</a>
+            <a href="login.html" class="nav-btn">🚪 Logout</a>
+        </div>
+    </div>
+</body>
+</html>

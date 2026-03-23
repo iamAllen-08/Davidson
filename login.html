@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Family Expense Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #00b4d8 0%, #ff9a56 50%, #f0932b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 { color: #2c3e50; margin-bottom: 30px; font-size: 2em; }
+        input, button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #00b4d8, #ff9a56);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { opacity: 0.9; }
+        .google-btn {
+            background: #4285f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .google-icon::before { content: "👤"; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Login to Tracker</h1>
+        <form action="welcome.html" method="get">
+            <input type="text" name="user" placeholder="Enter your name" required>
+            <button type="submit">Start Tracking →</button>
+        </form>
+        <a href="welcome.html" class="google-btn">
+            <span class="google-icon"></span> Google Login
+        </a>
+        <p style="margin-top: 20px; color: #666; font-size: 14px;">
+            No password needed - just for family use
+        </p>
+    </div>
+</body>
+</html>
