@@ -31,10 +31,7 @@
       opacity: 0.9;
       margin-top: 10px;
     }
-    .form-section {
-      padding: 40px 30px;
-      background: #f0f9ff;
-    }
+    .form-section { padding: 40px 30px; background: #f0f9ff; }
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,15 +67,8 @@
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(0,180,216,0.4);
     }
-    .recent-section {
-      padding: 30px;
-      background: white;
-    }
-    .recent-title {
-      color: #2c3e50;
-      margin-bottom: 20px;
-      font-size: 1.3em;
-    }
+    .recent-section { padding: 30px; background: white; }
+    .recent-title { color: #2c3e50; margin-bottom: 20px; font-size: 1.3em; }
     .recent-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -90,24 +80,8 @@
       border-radius: 12px;
       border-left: 5px solid #00b4d8;
     }
-    .item-amount {
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #d32f2f;
-    }
-    .item-category {
-      color: #0077b6;
-      font-weight: 600;
-      margin: 5px 0;
-    }
-    .nav-bar {
-      padding: 25px 30px;
-      background: #f0f9ff;
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .item-amount { font-size: 1.5em; font-weight: bold; color: #d32f2f; }
+    .item-category { color: #0077b6; font-weight: 600; margin: 5px 0; }
     .nav-btn {
       padding: 12px 25px;
       background: #00b4d8;
@@ -119,29 +93,38 @@
       font-weight: 500;
       transition: all 0.3s;
     }
-    .nav-btn:hover {
-      background: #0096c7;
-      transform: translateY(-2px);
-    }
+    .nav-btn:hover { background: #0096c7; transform: translateY(-2px); }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Family Expense Tracker</h1>
-      <div class="user-info">Track and manage your expenses easily</div>
+      <div class="user-info" id="userInfo">Track and manage your expenses easily</div>
     </header>
 
     <section class="form-section">
       <div class="form-grid">
         <input type="number" name="amount" placeholder="Amount">
-        <select name="category">
+        <select name="category" id="category">
           <option value="">Select Category</option>
           <option value="Food">Food</option>
           <option value="Transport">Transport</option>
           <option value="Bills">Bills</option>
           <option value="Entertainment">Entertainment</option>
+          <option value="Groceries">Groceries</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Education">Education</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Travel">Travel</option>
+          <option value="Savings">Savings</option>
+          <option value="Rent">Rent</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Subscriptions">Subscriptions</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+          <option value="Others">Others</option>
         </select>
+        <input type="text" id="customCategory" placeholder="Enter custom category" style="display:none;">
         <input type="date" name="date">
         <button class="add-btn">Add Expense</button>
       </div>
@@ -152,16 +135,41 @@
       <div class="recent-grid"></div>
     </section>
 
-    <!-- Go Back to Home Button -->
     <div style="text-align:center; padding:20px;">
-      <a href="index.html" class="nav-btn">Go Back to Home</a>
+      <a href="welcome.html" class="nav-btn">Go Back to Home</a>
     </div>
   </div>
 
   <script>
     const addBtn = document.querySelector('.add-btn');
     const recentGrid = document.querySelector('.recent-grid');
-    let records = JSON.parse(localStorage.getItem('expenseRecords')) || [];
+    const categorySelect = document.getElementById('category');
+    const customCategoryInput = document.getElementById('customCategory');
+    const userInfo = document.getElementById('userInfo');
+
+    // Get active user info
+    const activeUser = JSON.parse(localStorage.getItem("userData"));
+    if (!activeUser || !activeUser.email) {
+      alert("No active user found. Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    // Show logged-in user's name/email in header
+    userInfo.textContent = `Logged in as: ${activeUser.name} (${activeUser.email})`;
+
+    // Use email to create a unique key
+    const userKey = `expenseRecords_${activeUser.email}`;
+    let records = JSON.parse(localStorage.getItem(userKey)) || [];
+
+    // Show custom input when "Others" is selected
+    categorySelect.addEventListener('change', () => {
+      if (categorySelect.value === 'Others') {
+        customCategoryInput.style.display = 'block';
+      } else {
+        customCategoryInput.style.display = 'none';
+        customCategoryInput.value = '';
+      }
+    });
 
     function renderRecords() {
       recentGrid.innerHTML = '';
@@ -180,17 +188,23 @@
 
     addBtn.addEventListener('click', () => {
       const amount = document.querySelector('input[name="amount"]').value;
-      const category = document.querySelector('select[name="category"]').value;
+      let category = categorySelect.value;
       const date = document.querySelector('input[name="date"]').value;
+
+      if (category === 'Others') {
+        category = customCategoryInput.value.trim();
+      }
 
       if (amount && category && date) {
         const newRecord = { amount, category, date };
         records.push(newRecord);
-        localStorage.setItem('expenseRecords', JSON.stringify(records));
+        localStorage.setItem(userKey, JSON.stringify(records));
         renderRecords();
 
         document.querySelector('input[name="amount"]').value = '';
-        document.querySelector('select[name="category"]').value = '';
+        categorySelect.value = '';
+        customCategoryInput.value = '';
+        customCategoryInput.style.display = 'none';
         document.querySelector('input[name="date"]').value = '';
       } else {
         alert('Please fill all fields!');
@@ -199,7 +213,7 @@
 
     function deleteRecord(index) {
       records.splice(index, 1);
-      localStorage.setItem('expenseRecords', JSON.stringify(records));
+      localStorage.setItem(userKey, JSON.stringify(records));
       renderRecords();
     }
 
