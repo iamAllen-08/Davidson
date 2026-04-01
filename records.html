@@ -1,120 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Records - Family Expense Tracker</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 50%, #caf0f8 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, #00b4d8, #90e0ef);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .user-info {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-        .summary {
-            padding: 20px 30px;
-            background: #e3f2fd;
-            text-align: center;
-        }
-        .total { font-size: 2em; color: #d32f2f; font-weight: bold; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th { background: #b3e5fc; }
-        .nav-bar {
-            padding: 20px 30px;
-            background: #f0f8ff;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .nav-btn {
-            padding: 12px 24px;
-            background: #00b4d8;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-        .nav-btn:hover { background: #0096c7; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Records - Family Expense Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 50%, #caf0f8 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #00b4d8, #90e0ef);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .user-info {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .summary {
+      padding: 20px 30px;
+      background: #e3f2fd;
+      text-align: center;
+    }
+    .total { font-size: 2em; color: #d32f2f; font-weight: bold; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th { background: #b3e5fc; }
+    .nav-bar {
+      padding: 20px 30px;
+      background: #f0f8ff;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      padding: 12px 24px;
+      background: #00b4d8;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-btn:hover { background: #0096c7; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📈 Previous Records</h1>
-            <div class="user-info">Logged in as: Family Member</div>
-        </header>
-        
-        <div class="summary">
-            <div>Total Spent: <span class="total">₹8,700.00</span></div>
-        </div>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Groceries - Weekly</td>
-                    <td>₹2,500.00</td>
-                    <td>Groceries</td>
-                    <td>2026-03-20</td>
-                </tr>
-                <tr>
-                    <td>School Fees</td>
-                    <td>₹5,000.00</td>
-                    <td>School</td>
-                    <td>2026-03-22</td>
-                </tr>
-                <tr>
-                    <td>Petrol Fill-up</td>
-                    <td>₹1,200.00</td>
-                    <td>Fuel</td>
-                    <td>2026-03-23</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="nav-bar">
-            <a href="login.html" class="nav-btn">Logout</a>
-            <a href="welcome.html" class="nav-btn">Home</a>
-            <a href="recording.html" class="nav-btn">Add New Record</a>
-        </div>
+  <div class="container">
+    <header>
+      <h1>📈 Previous Records</h1>
+      <div class="user-info">Logged in as: Family Member</div>
+    </header>
+    
+    <div class="summary">
+      <div>Total Spent: <span class="total">₹0.00</span></div>
     </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="records-table">
+        <!-- Records will be injected here -->
+      </tbody>
+    </table>
+    
+    <div class="nav-bar">
+      <a href="login.html" class="nav-btn">Logout</a>
+      <a href="welcome.html" class="nav-btn">Home</a>
+      <a href="expp.html" class="nav-btn">Add New Record</a>
+    </div>
+  </div>
+
+  <script>
+    const recordsTable = document.getElementById('records-table');
+    const totalSpan = document.querySelector('.total');
+
+    // Retrieve records from localStorage
+    let records = JSON.parse(localStorage.getItem('expenseRecords')) || [];
+
+    function renderRecords() {
+      recordsTable.innerHTML = '';
+      let total = 0;
+
+      records.forEach(record => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>₹${record.amount}</td>
+          <td>${record.category}</td>
+          <td>${record.date}</td>
+        `;
+        recordsTable.appendChild(row);
+        total += parseFloat(record.amount);
+      });
+
+      totalSpan.textContent = `₹${total.toFixed(2)}`;
+    }
+
+    renderRecords();
+  </script>
 </body>
 </html>
