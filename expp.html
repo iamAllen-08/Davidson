@@ -5,96 +5,155 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Record Expenses - Family Expense Tracker</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #00b4d8 0%, #48cae4 50%, #ade8f4 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.95);
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    header {
-      background: linear-gradient(135deg, #00b4d8, #0077b6);
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    .user-info {
-      font-size: 1.1em;
-      opacity: 0.9;
-      margin-top: 10px;
-    }
-    .form-section { padding: 40px 30px; background: #f0f9ff; }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    input, select {
-      width: 100%;
-      padding: 15px;
-      border: 2px solid #e0f2fe;
-      border-radius: 12px;
-      font-size: 16px;
-      background: white;
-    }
-    input:focus, select:focus {
-      outline: none;
-      border-color: #00b4d8;
-      box-shadow: 0 0 0 3px rgba(0,180,216,0.1);
-    }
-    .add-btn {
-      grid-column: 1 / -1;
-      padding: 18px;
-      background: linear-gradient(135deg, #00b4d8, #0096c7);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .add-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,180,216,0.4);
-    }
-    .recent-section { padding: 30px; background: white; }
-    .recent-title { color: #2c3e50; margin-bottom: 20px; font-size: 1.3em; }
-    .recent-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
-    .recent-item {
-      background: #e3f2fd;
-      padding: 20px;
-      border-radius: 12px;
-      border-left: 5px solid #00b4d8;
-    }
-    .item-amount { font-size: 1.5em; font-weight: bold; color: #d32f2f; }
-    .item-category { color: #0077b6; font-weight: 600; margin: 5px 0; }
-    .nav-btn {
-      padding: 12px 25px;
-      background: #00b4d8;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-    .nav-btn:hover { background: #0096c7; transform: translateY(-2px); }
-  </style>
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, cyan 0%, white 100%);
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2); /* transparent box */
+  backdrop-filter: blur(12px); /* glass effect */
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Header */
+header {
+  background: rgba(0, 0, 0, 0.4); /* semi-transparent header */
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.user-info {
+  font-size: 1.1em;
+  opacity: 0.9;
+  margin-top: 10px;
+}
+
+/* Form Section */
+.form-section {
+  padding: 40px 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.3); /* translucent inputs */
+  color: #000;
+  text-align: center;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: cyan;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2);
+}
+
+/* Add Button */
+.add-btn {
+  grid-column: 1 / -1;
+  padding: 18px;
+  background: rgba(0, 191, 255, 0.7); /* translucent cyan button */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 191, 255, 0.4);
+}
+
+/* Recent Section */
+.recent-section {
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.recent-title {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.recent-item {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid cyan;
+}
+
+.item-amount {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.item-category {
+  color: #0077b6;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+/* Navigation Button */
+.nav-btn {
+  padding: 12px 25px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-2px);
+}
+</style>
 </head>
 <body>
   <div class="container">
@@ -201,6 +260,7 @@
         localStorage.setItem(userKey, JSON.stringify(records));
         renderRecords();
 
+        // Reset form
         document.querySelector('input[name="amount"]').value = '';
         categorySelect.value = '';
         customCategoryInput.value = '';
@@ -217,6 +277,7 @@
       renderRecords();
     }
 
+    // Render saved records on page load
     renderRecords();
   </script>
 </body>
