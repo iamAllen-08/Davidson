@@ -41,92 +41,106 @@
       font-weight: bold;
     }
     button:hover { opacity: 0.9; }
-    .google-btn {
-      background: #4285f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-      color: white;
-      text-decoration: none;
-      padding: 12px;
-      border-radius: 10px;
-    }
-    .google-icon::before { content: "👤"; font-size: 20px; }
-    .toggle-link {
-      margin-top: 15px;
-      display: block;
-      color: #0077b6;
-      cursor: pointer;
+    .error {
+      color: red;
       font-size: 14px;
+      margin-top: 10px;
+    }
+    .already {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+    .already a {
+      color: #00b4d8;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .already a:hover {
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="login-box">
-    <h1 id="form-title">Login to Tracker</h1>
-    <form id="loginForm" action="welcome.html" method="get">
-      <!-- Login fields -->
-      <div id="login-fields">
-        <input type="text" name="user" placeholder="Enter your name" required>
-      </div>
-
-      <!-- Registration fields (hidden initially) -->
-      <div id="register-fields" style="display:none;">
-        <input type="text" name="user" placeholder="Enter your name" required>
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <input type="number" name="age" placeholder="Enter your age" required>
-        <input type="password" name="password" placeholder="Enter password" required>
-        <input type="password" name="confirmPassword" placeholder="Confirm password" required>
-      </div>
-
-      <button type="submit" id="submitBtn">Start Tracking →</button>
+    <h1>Login to Tracker</h1>
+    <!-- Full registration form -->
+    <form id="loginForm">
+      <input type="text" name="name" placeholder="Enter your name" required>
+      <input type="number" name="age" placeholder="Enter your age" required>
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="password" name="password" placeholder="Enter password" required>
+      <input type="password" name="confirmPassword" placeholder="Confirm password" required>
+      
+      <button type="submit">Start Tracking →</button>
+      <div class="error" id="errorMsg"></div>
     </form>
 
-    <a href="welcome.html" class="google-btn">
-      <span class="google-icon"></span> Google Login
-    </a>
+    <!-- Quick login form for already logged in users -->
+    <form id="quickLoginForm" class="hidden">
+      <input type="text" name="quickName" placeholder="Enter your name" required>
+      <input type="email" name="quickEmail" placeholder="Enter your email" required>
+      <button type="submit">Continue →</button>
+    </form>
 
-    <span class="toggle-link" id="toggleLink">First time here? Register</span>
+    <p class="already"><a id="alreadyLink">Already logged in?</a></p>
   </div>
 
   <script>
-    const toggleLink = document.getElementById('toggleLink');
-    const formTitle = document.getElementById('form-title');
-    const loginFields = document.getElementById('login-fields');
-    const registerFields = document.getElementById('register-fields');
-    const submitBtn = document.getElementById('submitBtn');
+    const form = document.getElementById('loginForm');
+    const quickForm = document.getElementById('quickLoginForm');
+    const alreadyLink = document.getElementById('alreadyLink');
+    const errorMsg = document.getElementById('errorMsg');
 
-    let isRegister = false;
+    // Registration form
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-    toggleLink.addEventListener('click', () => {
-      isRegister = !isRegister;
-      if (isRegister) {
-        formTitle.textContent = "Register for Tracker";
-        loginFields.style.display = "none";
-        registerFields.style.display = "block";
-        submitBtn.textContent = "Register →";
-        toggleLink.textContent = "Already have an account? Login";
-      } else {
-        formTitle.textContent = "Login to Tracker";
-        loginFields.style.display = "block";
-        registerFields.style.display = "none";
-        submitBtn.textContent = "Start Tracking →";
-        toggleLink.textContent = "First time here? Register";
+      const name = form.name.value.trim();
+      const age = form.age.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      if (parseInt(age) < 13) {
+        errorMsg.textContent = "You must be at least 13 years old.";
+        return;
       }
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match.";
+        return;
+      }
+
+      const userData = { name, age, email, password };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      window.location.href = "welcome.html";
     });
 
-    // Simple password confirmation check
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-      if (isRegister) {
-        const password = document.querySelector('input[name="password"]').value;
-        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
-        if (password !== confirmPassword) {
-          e.preventDefault();
-          alert("Passwords do not match!");
-        }
+    // Toggle quick login form
+    alreadyLink.addEventListener('click', () => {
+      form.classList.add('hidden');
+      quickForm.classList.remove('hidden');
+    });
+
+    // Quick login form
+    quickForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const quickName = quickForm.quickName.value.trim();
+      const quickEmail = quickForm.quickEmail.value.trim();
+
+      if (!quickName || !quickEmail) {
+        alert("Please enter both name and email.");
+        return;
       }
+
+      const userData = { name: quickName, email: quickEmail };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      window.location.href = "welcome.html";
     });
   </script>
 </body>
