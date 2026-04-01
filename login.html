@@ -3,144 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Family Expense Tracker</title>
+  <title>Welcome - Family Expense Tracker</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       height: 100vh;
-      background: linear-gradient(135deg, #00b4d8 0%, #ff9a56 50%, #f0932b 100%);
+      background: linear-gradient(135deg, #00b4d8 0%, #ff6b9d 50%, #feca57 100%);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    .login-box {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
       text-align: center;
-    }
-    h1 { color: #2c3e50; margin-bottom: 30px; font-size: 2em; }
-    input, button {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    button {
-      background: linear-gradient(135deg, #00b4d8, #ff9a56);
       color: white;
-      border: none;
-      cursor: pointer;
+    }
+    .welcome-sign {
+      font-size: 4em;
       font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      color: black;
     }
-    button:hover { opacity: 0.9; }
-    .error {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
+    .user-greeting {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      opacity: 0.9;
     }
-    .already {
+    .total-display {
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #1a1a1a; /* Darker font for label */
+      margin-bottom: 15px;
+    }
+    .total-display input {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #1a1a1a;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      padding: 8px 15px;
+      text-align: center;
+      outline: none;
+      background: rgba(255,255,255,0.2); /* Transparent look */
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .total-display input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .total-display input:focus {
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .balance-display {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      color: white;
+      opacity: 0.9;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
       margin-top: 20px;
-      font-size: 14px;
-      color: #666;
     }
-    .already a {
-      color: #00b4d8;
-      text-decoration: none;
-      font-weight: bold;
+    .nav-btn {
+      padding: 20px 40px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      font-size: 18px;
       cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
     }
-    .already a:hover {
-      text-decoration: underline;
-    }
-    .hidden {
-      display: none;
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h1>Login to Tracker</h1>
-    <!-- Full registration form -->
-    <form id="loginForm">
-      <input type="text" name="name" placeholder="Enter your name" required>
-      <input type="number" name="age" placeholder="Enter your age" required>
-      <input type="email" name="email" placeholder="Enter your email" required>
-      <input type="password" name="password" placeholder="Enter password" required>
-      <input type="password" name="confirmPassword" placeholder="Confirm password" required>
-      
-      <button type="submit">Start Tracking →</button>
-      <div class="error" id="errorMsg"></div>
-    </form>
-
-    <!-- Quick login form for already logged in users -->
-    <form id="quickLoginForm" class="hidden">
-      <input type="text" name="quickName" placeholder="Enter your name" required>
-      <input type="email" name="quickEmail" placeholder="Enter your email" required>
-      <button type="submit">Continue →</button>
-    </form>
-
-    <p class="already"><a id="alreadyLink">Already logged in?</a></p>
+  <div class="welcome-sign">Welcome!</div>
+  <div class="user-greeting" id="userGreeting">Hello Family Member! 👋</div>
+  
+  <!-- Editable Total Amount at top -->
+  <div class="total-display">
+    Total Amount = <input type="number" id="totalAmount" placeholder="Enter Amount">
   </div>
+  
+  <!-- Remaining Balance just below -->
+  <div class="balance-display" id="balanceDisplay">💰 Remaining Balance: Not calculated yet</div>
+  
+<div class="nav-buttons">
+  <a href="expp.html" class="nav-btn">📊 Record Expenses</a>
+  <a href="random.html" class="nav-btn">🤑Record earnings </a>
+  <a href="records.html" class="nav-btn">📈 View Records</a>
+  <a href="total.html" class="nav-btn">💰 View Balance</a>
+  <a href="login.html" class="nav-btn">← Back to Login</a>
+
+</div>
+
 
   <script>
-    const form = document.getElementById('loginForm');
-    const quickForm = document.getElementById('quickLoginForm');
-    const alreadyLink = document.getElementById('alreadyLink');
-    const errorMsg = document.getElementById('errorMsg');
+    // Retrieve user data from localStorage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const greetingElement = document.getElementById('userGreeting');
+    if (userData && userData.email) {
+      const name = userData.name || userData.email.split('@')[0];
+      greetingElement.textContent = `Hello, ${name}! 👋`;
+    } else {
+      greetingElement.textContent = "Hello Family Member! 👋";
+    }
 
-    // Registration form
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+    const totalInput = document.getElementById("totalAmount");
+    const balanceDisplay = document.getElementById("balanceDisplay");
 
-      const name = form.name.value.trim();
-      const age = form.age.value.trim();
-      const email = form.email.value.trim();
-      const password = form.password.value;
-      const confirmPassword = form.confirmPassword.value;
+    // Auto-fill total amount if saved
+    const savedAmount = localStorage.getItem("totalAmount");
+    if (savedAmount) {
+      totalInput.value = savedAmount;
+    }
 
-      if (parseInt(age) < 13) {
-        errorMsg.textContent = "You must be at least 13 years old.";
-        return;
+    // Show remaining balance snapshot
+    const remainingBalance = localStorage.getItem("remainingBalance");
+    if (remainingBalance !== null) {
+      balanceDisplay.textContent = `💰 Remaining Balance: ₹${remainingBalance}`;
+    }
+
+    // Save total amount live
+    totalInput.addEventListener("input", () => {
+      const amount = totalInput.value;
+      if (amount) {
+        localStorage.setItem("totalAmount", amount);
       }
-      if (password !== confirmPassword) {
-        errorMsg.textContent = "Passwords do not match.";
-        return;
-      }
-
-      const userData = { name, age, email, password };
-      localStorage.setItem('userData', JSON.stringify(userData));
-      window.location.href = "welcome.html";
-    });
-
-    // Toggle quick login form
-    alreadyLink.addEventListener('click', () => {
-      form.classList.add('hidden');
-      quickForm.classList.remove('hidden');
-    });
-
-    // Quick login form
-    quickForm.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const quickName = quickForm.quickName.value.trim();
-      const quickEmail = quickForm.quickEmail.value.trim();
-
-      if (!quickName || !quickEmail) {
-        alert("Please enter both name and email.");
-        return;
-      }
-
-      const userData = { name: quickName, email: quickEmail };
-      localStorage.setItem('userData', JSON.stringify(userData));
-      window.location.href = "welcome.html";
     });
   </script>
 </body>
