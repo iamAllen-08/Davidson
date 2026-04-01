@@ -1,70 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Family Expense Tracker</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            background: linear-gradient(135deg, #00b4d8 0%, #ff9a56 50%, #f0932b 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h1 { color: #2c3e50; margin-bottom: 30px; font-size: 2em; }
-        input, button {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-        button {
-            background: linear-gradient(135deg, #00b4d8, #ff9a56);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover { opacity: 0.9; }
-        .google-btn {
-            background: #4285f4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .google-icon::before { content: "👤"; font-size: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Expense Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #00b4d8 0%, #ff9a56 50%, #f0932b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 { color: #2c3e50; margin-bottom: 30px; font-size: 2em; }
+    input, button {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: linear-gradient(135deg, #00b4d8, #ff9a56);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { opacity: 0.9; }
+    .google-btn {
+      background: #4285f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .google-icon::before { content: "👤"; font-size: 20px; }
+
+    /* Tracker styles */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: none; /* hidden until login */
+    }
+    header {
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .user-info {
+      font-size: 1.1em;
+      opacity: 0.9;
+      margin-top: 10px;
+    }
+    .form-section {
+      padding: 40px 30px;
+      background: #f0f9ff;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    input, select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0f2fe;
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #00b4d8;
+      box-shadow: 0 0 0 3px rgba(0,180,216,0.1);
+    }
+    .add-btn {
+      grid-column: 1 / -1;
+      padding: 18px;
+      background: linear-gradient(135deg, #00b4d8, #0096c7);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .add-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,180,216,0.4);
+    }
+    .recent-section {
+      padding: 30px;
+      background: white;
+    }
+    .recent-title {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+    }
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .recent-item {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid #00b4d8;
+    }
+    .item-amount {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #d32f2f;
+    }
+    .item-category {
+      color: #0077b6;
+      font-weight: 600;
+      margin: 5px 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-box">
-        <h1>Login to Tracker</h1>
-        <form action="welcome.html" method="get">
-            <input type="text" name="user" placeholder="Enter your name" required>
-            <button type="submit">Start Tracking →</button>
-        </form>
-        <a href="welcome.html" class="google-btn">
-            <span class="google-icon"></span> Google Login
-        </a>
-        <p style="margin-top: 20px; color: #666; font-size: 14px;">
-            No password needed - just for family use
-        </p>
-    </div>
-</body>
-</html>
+  <!-- Login Section -->
+  <div class="login-box" id="loginBox">
+    <h1>Login to Tracker</h1>
+    <form id="loginForm">
+      <input type="text" name="user" id="username" placeholder="Enter your name" required>
+      <button type="submit">Start Tracking →</button>
+    </form>
+    <a href="#" class="google-btn">
+      <span class="google-icon"></span> Google Login
+    </a>
+    <p style="margin-top: 20px; color: #666; font-size: 14px;">
+      No password needed - just for family use
+    </p>
+  </div>
+
+  <!-- Tracker Section -->
+  <div class="container" id="tracker">
+    <header>
+      <h1>Family Expense Tracker</h1>
+      <div class="user-info" id="welcomeUser"></div>
+    </header>
+
+    <section class="form-section">
+      <div class="form-grid">
+        <input type="number" name="amount" placeholder="Amount">
+        <select name="category">
+          <option value="">Select Category</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Bills">Bills</option>
+          <option value="Entertainment">Entertainment</option>
+        </select>
+        <input type="date" name="date">
+        <button class="add-btn">Add Expense</button>
+      </div>
+    </section>
+
+    <section class="recent-section">
+      <h2 class="recent-title">Recent Expenses</h2>
+      <div class="recent-grid"></div>
+    </section>
+  </div>
+
+  <script>
+    // Login logic
+    const loginForm = document.getElementById('loginForm');
+    const loginBox = document.getElementById('loginBox');
+    const tracker = document.getElementById('tracker');
+    const welcomeUser = document.getElementById('welcomeUser');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      if(username) {
+        welcomeUser.textContent = "Welcome, " + username + "!";
+        loginBox.style.display = 'none';
+        tracker.style.display = 'block';
+      }
+    });
+
+    // Expense tracker logic
+    const addBtn = document.querySelector('.add-btn');
+    const recentGrid = document.querySelector('.recent-grid');
+    let records = JSON.parse(localStorage.getItem('expenseRecords')) || [];
+
+    function renderRecords() {
+      recentGrid.innerHTML = '';
+      records.forEach((record, index) => {
+        const item = document.createElement('div');
+        item.classList.add('recent-item');
+        item.innerHTML = `
+          <div class="item-amount">₹${record.amount}</div>
+          <div class="item-category">${record.category}</div>
+          <div class="item-date">${record.date}</div>
+          <button onclick="deleteRecord(${index})" style="margin-top:10px; padding:5px 10px; border:none; background:#d32f2f; color:white; border-radius:8px; cursor:pointer;">Delete</button>
+        `;
+        recentGrid.appendChild(item);
+      });
+    }
+
+    addBtn.addEventListener('click', () => {
+      const amount = document.querySelector('input[name="amount"]').value;
+      const category = document.querySelector('select[name="category"]').value;
+      const date = document.querySelector('input[name="date"]').value;
+
+      if (amount
