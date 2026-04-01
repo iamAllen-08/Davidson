@@ -26,7 +26,39 @@
     }
     .user-greeting {
       font-size: 1.5em;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+    .total-display {
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #1a1a1a; /* Darker font for label */
+      margin-bottom: 15px;
+    }
+    .total-display input {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #1a1a1a;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      padding: 8px 15px;
+      text-align: center;
+      outline: none;
+      background: rgba(255,255,255,0.2); /* Transparent look */
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .total-display input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .total-display input:focus {
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .balance-display {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      color: white;
       opacity: 0.9;
     }
     .nav-buttons {
@@ -34,6 +66,7 @@
       gap: 20px;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 20px;
     }
     .nav-btn {
       padding: 20px 40px;
@@ -58,25 +91,58 @@
 <body>
   <div class="welcome-sign">Welcome!</div>
   <div class="user-greeting" id="userGreeting">Hello Family Member! 👋</div>
-  <div class="nav-buttons">
-    <a href="expp.html" class="nav-btn">📊 Record Expenses</a>
-    <a href="records.html" class="nav-btn">📈 View Records</a>
-    <a href="login.html" class="nav-btn">← Back to Login</a>
-    <a href="family.html" class="nav-btn">← view family spending</a>
+  
+  <!-- Editable Total Amount at top -->
+  <div class="total-display">
+    Total Amount = <input type="number" id="totalAmount" placeholder="Enter Amount">
   </div>
+  
+  <!-- Remaining Balance just below -->
+  <div class="balance-display" id="balanceDisplay">💰 Remaining Balance: Not calculated yet</div>
+  
+<div class="nav-buttons">
+  <a href="expp.html" class="nav-btn">📊 Record Expenses</a>
+  <a href="random.html" class="nav-btn">🤑Record earnings </a>
+  <a href="records.html" class="nav-btn">📈 View Records</a>
+  <a href="total.html" class="nav-btn">💰 View Balance</a>
+  <a href="login.html" class="nav-btn">← Back to Login</a>
+
+</div>
+
 
   <script>
     // Retrieve user data from localStorage
     const userData = JSON.parse(localStorage.getItem('userData'));
-
     const greetingElement = document.getElementById('userGreeting');
     if (userData && userData.email) {
-      // If name was stored separately, use that. Otherwise, fallback to email prefix.
       const name = userData.name || userData.email.split('@')[0];
       greetingElement.textContent = `Hello, ${name}! 👋`;
     } else {
       greetingElement.textContent = "Hello Family Member! 👋";
     }
+
+    const totalInput = document.getElementById("totalAmount");
+    const balanceDisplay = document.getElementById("balanceDisplay");
+
+    // Auto-fill total amount if saved
+    const savedAmount = localStorage.getItem("totalAmount");
+    if (savedAmount) {
+      totalInput.value = savedAmount;
+    }
+
+    // Show remaining balance snapshot
+    const remainingBalance = localStorage.getItem("remainingBalance");
+    if (remainingBalance !== null) {
+      balanceDisplay.textContent = `💰 Remaining Balance: ₹${remainingBalance}`;
+    }
+
+    // Save total amount live
+    totalInput.addEventListener("input", () => {
+      const amount = totalInput.value;
+      if (amount) {
+        localStorage.setItem("totalAmount", amount);
+      }
+    });
   </script>
 </body>
 </html>
