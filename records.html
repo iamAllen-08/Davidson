@@ -26,10 +26,7 @@
       padding: 30px;
       text-align: center;
     }
-    .user-info {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
+    .user-info { font-size: 1.2em; margin-bottom: 20px; }
     .summary {
       padding: 20px 30px;
       background: #e3f2fd;
@@ -72,7 +69,7 @@
   <div class="container">
     <header>
       <h1>📈 Previous Records</h1>
-      <div class="user-info">Logged in as: Family Member</div>
+      <div class="user-info" id="userInfo">Logged in as: Family Member</div>
     </header>
     
     <div class="summary">
@@ -87,37 +84,48 @@
           <th>Date</th>
         </tr>
       </thead>
-      <tbody id="records-table">
+      <tbody id="recordsTableBody">
         <!-- Records will be injected here -->
       </tbody>
     </table>
     
     <div class="nav-bar">
-      <a href="login.html" class="nav-btn">Logout</a>
       <a href="welcome.html" class="nav-btn">Home</a>
       <a href="expp.html" class="nav-btn">Add New Record</a>
     </div>
   </div>
 
   <script>
-    const recordsTable = document.getElementById('records-table');
+    const tableBody = document.getElementById('recordsTableBody');
     const totalSpan = document.querySelector('.total');
+    const userInfo = document.getElementById('userInfo');
 
-    // Retrieve records from localStorage
-    let records = JSON.parse(localStorage.getItem('expenseRecords')) || [];
+    // Get active user info
+    const activeUser = JSON.parse(localStorage.getItem("userData"));
+    if (!activeUser || !activeUser.email) {
+      alert("No active user found. Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    // Show logged-in user's name/email
+    userInfo.textContent = `Logged in as: ${activeUser.name} (${activeUser.email})`;
+
+    // Use email to create a unique key
+    const userKey = `expenseRecords_${activeUser.email}`;
+    const records = JSON.parse(localStorage.getItem(userKey)) || [];
 
     function renderRecords() {
-      recordsTable.innerHTML = '';
+      tableBody.innerHTML = '';
       let total = 0;
 
       records.forEach(record => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>₹${record.amount}</td>
+          <td>₹${parseFloat(record.amount).toFixed(2)}</td>
           <td>${record.category}</td>
           <td>${record.date}</td>
         `;
-        recordsTable.appendChild(row);
+        tableBody.appendChild(row);
         total += parseFloat(record.amount);
       });
 
