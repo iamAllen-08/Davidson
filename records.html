@@ -8,14 +8,14 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 50%, #caf0f8 100%);
+      background: linear-gradient(135deg, cyan 0%, white 100%);
       min-height: 100vh;
       padding: 20px;
     }
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.7); /* translucent box */
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
       overflow: hidden;
@@ -63,6 +63,14 @@
       transition: background 0.3s;
     }
     .nav-btn:hover { background: #0096c7; }
+
+    /* New styles for earnings vs spendings */
+    .earning-row td {
+      border-left: 5px solid green;
+    }
+    .spending-row td {
+      border-left: 5px solid red;
+    }
   </style>
 </head>
 <body>
@@ -73,7 +81,7 @@
     </header>
     
     <div class="summary">
-      <div>Total Spent: <span class="total">₹0.00</span></div>
+      <div>Total Balance: <span class="total">₹0.00</span></div>
     </div>
     
     <table>
@@ -92,47 +100,69 @@
     <div class="nav-bar">
       <a href="welcome.html" class="nav-btn">Home</a>
       <a href="expp.html" class="nav-btn">Add New Record</a>
+      <a href="earnings.html" class="nav-btn">Add Earnings</a>
     </div>
   </div>
 
   <script>
-    const tableBody = document.getElementById('recordsTableBody');
-    const totalSpan = document.querySelector('.total');
-    const userInfo = document.getElementById('userInfo');
+  const tableBody = document.getElementById('recordsTableBody');
+  const totalSpan = document.querySelector('.total');
+  const userInfo = document.getElementById('userInfo');
 
-    // Get active user info
-    const activeUser = JSON.parse(localStorage.getItem("userData"));
-    if (!activeUser || !activeUser.email) {
-      alert("No active user found. Please log in first.");
-      window.location.href = "login.html";
+  // Get active user info
+  const activeUser = JSON.parse(localStorage.getItem("userData"));
+  if (!activeUser || !activeUser.email) {
+    alert("No active user found. Please log in first.");
+    window.location.href = "login.html";
+  }
+
+  // Show logged-in user's name/email
+  userInfo.textContent = `Logged in as: ${activeUser.name} (${activeUser.email})`;
+
+  // Keys for records
+  const userKey = `expenseRecords_${activeUser.email}`;
+  const earningsKey = `monthlyEarnings_${activeUser.email}`;
+  const monthKey = `earningsMonth_${activeUser.email}`;
+
+  const records = JSON.parse(localStorage.getItem(userKey)) || [];
+  const earnings = localStorage.getItem(earningsKey);
+  const earningsMonth = localStorage.getItem(monthKey);
+
+  function renderRecords() {
+    tableBody.innerHTML = '';
+    let totalSpent = 0;
+    let totalEarned = earnings ? parseFloat(earnings) : 0;
+
+    // Show earnings row if available
+    if (earnings) {
+      const row = document.createElement('tr');
+      row.classList.add('earning-row');
+      row.innerHTML = `
+        <td>₹${parseFloat(earnings).toFixed(2)}</td>
+        <td>Earnings (${earningsMonth || "Month not set"})</td>
+        <td>-</td>
+      `;
+      tableBody.appendChild(row);
     }
 
-    // Show logged-in user's name/email
-    userInfo.textContent = `Logged in as: ${activeUser.name} (${activeUser.email})`;
+    // Show spending records
+    records.forEach(record => {
+      const row = document.createElement('tr');
+      row.classList.add('spending-row');
+      row.innerHTML = `
+        <td>₹${parseFloat(record.amount).toFixed(2)}</td>
+        <td>${record.category}</td>
+        <td>${record.date}</td>
+      `;
+      tableBody.appendChild(row);
+      totalSpent += parseFloat(record.amount);
+    });
 
-    // Use email to create a unique key
-    const userKey = `expenseRecords_${activeUser.email}`;
-    const records = JSON.parse(localStorage.getItem(userKey)) || [];
+    const balance = totalEarned - totalSpent;
+    totalSpan.textContent = `₹${balance.toFixed(2)}`;
+  }
 
-    function renderRecords() {
-      tableBody.innerHTML = '';
-      let total = 0;
-
-      records.forEach(record => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>₹${parseFloat(record.amount).toFixed(2)}</td>
-          <td>${record.category}</td>
-          <td>${record.date}</td>
-        `;
-        tableBody.appendChild(row);
-        total += parseFloat(record.amount);
-      });
-
-      totalSpan.textContent = `₹${total.toFixed(2)}`;
-    }
-
-    renderRecords();
+  renderRecords();
   </script>
 </body>
 </html>
