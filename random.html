@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Earnings - Family Expense Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, cyan 0%, white 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+      text-align: center;
+    }
+    header { margin-bottom: 30px; }
+    header h1 { color: #0077b6; font-size: 2em; }
+    .form-group { margin-bottom: 20px; }
+    input, select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 12px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.3);
+      color: #000;
+      text-align: center;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: cyan;
+      box-shadow: 0 0 0 3px rgba(0,255,255,0.2);
+    }
+    .save-btn {
+      padding: 15px 30px;
+      background: rgba(0,191,255,0.8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,191,255,0.4);
+    }
+    .nav { margin-top: 25px; }
+    .nav a {
+      text-decoration: none;
+      padding: 12px 25px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border-radius: 25px;
+      transition: all 0.3s;
+    }
+    .nav a:hover {
+      background: rgba(0,0,0,0.7);
+      transform: translateY(-2px);
+    }
+    .status {
+      margin-top: 20px;
+      font-weight: 600;
+      color: #0077b6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Enter Monthly Earnings</h1>
+    </header>
+    <div class="form-group">
+      <input type="number" id="earningsInput" placeholder="Enter your monthly earnings (₹)">
+    </div>
+    <div class="form-group">
+      <select id="monthInput">
+        <option value="">Select Month</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+    </div>
+    <button class="save-btn" id="saveBtn">Save Earnings</button>
+    <div class="status" id="statusMsg"></div>
+    <div class="nav">
+      <a href="welcome.html">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const saveBtn = document.getElementById('saveBtn');
+    const earningsInput = document.getElementById('earningsInput');
+    const monthInput = document.getElementById('monthInput');
+    const statusMsg = document.getElementById('statusMsg');
+
+    // Get active user info
+    const activeUser = JSON.parse(localStorage.getItem("userData"));
+    if (!activeUser || !activeUser.email) {
+      alert("No active user found. Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    const earningsKey = `monthlyEarnings_${activeUser.email}`;
+    const monthKey = `earningsMonth_${activeUser.email}`;
+
+    // Auto-fill saved earnings and month if available
+    const savedEarnings = localStorage.getItem(earningsKey);
+    const savedMonth = localStorage.getItem(monthKey);
+
+    if (savedEarnings) {
+      earningsInput.value = savedEarnings;
+    }
+    if (savedMonth) {
+      monthInput.value = savedMonth;
+    }
+    if (savedEarnings && savedMonth) {
+      statusMsg.textContent = `Saved earnings: ₹${savedEarnings} (Month: ${savedMonth})`;
+    }
+
+    saveBtn.addEventListener('click', () => {
+      const earnings = earningsInput.value.trim();
+      const month = monthInput.value.trim();
+
+      if (earnings && month) {
+        localStorage.setItem(earningsKey, earnings);
+        localStorage.setItem(monthKey, month);
+        statusMsg.textContent = `Earnings saved: ₹${earnings} (Month: ${month})`;
+      } else {
+        alert("Please enter your earnings amount and select a month!");
+      }
+    });
+  </script>
+</body>
+</html>
