@@ -3,208 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Record Expenses - Family Expense Tracker</title>
+  <title>Monthly Earnings - Family Expense Tracker</title>
   <style>
-/* Global Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, cyan 0%, white 100%);
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Container */
-.container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
-  background: #ffffff; /* solid white */
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
-
-/* Header */
-header {
-  background: #000000; /* solid black */
-  color: white;
-  padding: 30px;
-  text-align: center;
-}
-
-.user-info {
-  font-size: 1.1em;
-  opacity: 1; /* fully opaque */
-  margin-top: 10px;
-}
-
-/* Form Section */
-.form-section {
-  padding: 40px 30px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 15px;
-  border: 2px solid #cccccc; /* solid border */
-  border-radius: 12px;
-  font-size: 16px;
-  background: #ffffff; /* solid background */
-  color: #000;
-  text-align: center;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-color: cyan;
-  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2);
-}
-
-/* Add Button */
-.add-btn {
-  grid-column: 1 / -1;
-  padding: 18px;
-  background: #00bfff; /* solid cyan */
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.add-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 191, 255, 0.4);
-}
-
-/* Recent Section */
-.recent-section {
-  padding: 30px;
-  background: #ffffff; /* solid white */
-}
-
-.recent-title {
-  color: #000; /* solid black text */
-  margin-bottom: 20px;
-  font-size: 1.3em;
-}
-
-.recent-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-}
-
-.recent-item {
-  background: #f5f5f5; /* light gray solid */
-  padding: 20px;
-  border-radius: 12px;
-  border-left: 5px solid cyan;
-}
-
-.item-amount {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #d32f2f;
-}
-
-.item-category {
-  color: #0077b6;
-  font-weight: 600;
-  margin: 5px 0;
-}
-
-/* Navigation Button */
-.nav-btn {
-  padding: 12px 25px;
-  background: #000000; /* solid black */
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-}
-
-.nav-btn:hover {
-  background: #333333; /* darker solid */
-  transform: translateY(-2px);
-}
-</style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, cyan 0%, white 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #ffffff; /* solid white */
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+      text-align: center;
+    }
+    header { margin-bottom: 30px; }
+    header h1 { color: #0077b6; font-size: 2em; }
+    .form-group { margin-bottom: 20px; }
+    input, select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #cccccc; /* solid border */
+      border-radius: 12px;
+      font-size: 16px;
+      background: #ffffff; /* solid background */
+      color: #000;
+      text-align: center;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: cyan;
+      box-shadow: 0 0 0 3px rgba(0,255,255,0.2);
+    }
+    .save-btn {
+      padding: 15px 30px;
+      background: #00bfff; /* solid cyan */
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,191,255,0.4);
+    }
+    .nav { margin-top: 25px; }
+    .nav a {
+      text-decoration: none;
+      padding: 12px 25px;
+      background: #000000; /* solid black */
+      color: white;
+      border-radius: 25px;
+      transition: all 0.3s;
+      margin: 5px;
+      display: inline-block;
+    }
+    .nav a:hover {
+      background: #333333; /* darker solid */
+      transform: translateY(-2px);
+    }
+    .status {
+      margin-top: 20px;
+      font-weight: 600;
+      color: #0077b6;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      background: #f5f5f5; /* solid light gray */
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #cccccc; /* solid border */
+      text-align: center;
+    }
+    th {
+      background: #008080; /* solid teal */
+      color: #ffffff; /* white text */
+    }
+    td {
+      color: #004d40;
+      font-weight: 500;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>Family Expense Tracker</h1>
-      <div class="user-info" id="userInfo">Track and manage your expenses easily</div>
+      <h1>Enter Monthly Earnings</h1>
     </header>
+    <div class="form-group">
+      <input type="number" id="earningsInput" placeholder="Enter your monthly earnings (₹)">
+    </div>
+    <div class="form-group">
+      <select id="monthInput">
+        <option value="">Select Month</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+    </div>
+    <button class="save-btn" id="saveBtn">Save Earnings</button>
+    <div class="status" id="statusMsg"></div>
 
-    <section class="form-section">
-      <div class="form-grid">
-        <input type="number" name="amount" placeholder="Amount">
-        <select name="category" id="category">
-          <option value="">Select Category</option>
-          <option value="Food">Food</option>
-          <option value="Transport">Transport</option>
-          <option value="Bills">Bills</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Groceries">Groceries</option>
-          <option value="Healthcare">Healthcare</option>
-          <option value="Education">Education</option>
-          <option value="Shopping">Shopping</option>
-          <option value="Travel">Travel</option>
-          <option value="Savings">Savings</option>
-          <option value="Rent">Rent</option>
-          <option value="Utilities">Utilities</option>
-          <option value="Subscriptions">Subscriptions</option>
-          <option value="Miscellaneous">Miscellaneous</option>
-          <option value="Others">Others</option>
-        </select>
-        <input type="text" id="customCategory" placeholder="Enter custom category" style="display:none;">
-        <input type="date" name="date">
-        <button class="add-btn">Add Expense</button>
-      </div>
-    </section>
+    <!-- Earnings History Table -->
+    <table id="earningsTable">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Earnings (₹)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-    <section class="recent-section">
-      <h2 class="recent-title">Recent Expenses</h2>
-      <div class="recent-grid"></div>
-    </section>
-
-    <div style="text-align:center; padding:20px;">
-      <a href="welcome.html" class="nav-btn">Go Back to Home</a>
-      <a href="total.html" class="nav-btn">View Records</a>
+    <div class="nav">
+      <a href="expp.html">Go to Record Expenses</a>
+      <a href="total.html">View records</a>
+      <a href="welcome.html">Back to Home</a>
     </div>
   </div>
 
   <script>
-    const addBtn = document.querySelector('.add-btn');
-    const recentGrid = document.querySelector('.recent-grid');
-    const categorySelect = document.getElementById('category');
-    const customCategoryInput = document.getElementById('customCategory');
-    const userInfo = document.getElementById('userInfo');
+    const saveBtn = document.getElementById('saveBtn');
+    const earningsInput = document.getElementById('earningsInput');
+    const monthInput = document.getElementById('monthInput');
+    const statusMsg = document.getElementById('statusMsg');
+    const earningsTableBody = document.querySelector("#earningsTable tbody");
 
     // Get active user info
     const activeUser = JSON.parse(localStorage.getItem("userData"));
@@ -213,71 +160,42 @@ select:focus {
       window.location.href = "login.html";
     }
 
-    // Show logged-in user's name/email in header
-    userInfo.textContent = `Logged in as: ${activeUser.name} (${activeUser.email})`;
+    const earningsHistoryKey = `earningsHistory_${activeUser.email}`;
 
-    // Use email to create a unique key
-    const userKey = `expenseRecords_${activeUser.email}`;
-    let records = JSON.parse(localStorage.getItem(userKey)) || [];
+    // Load saved history
+    let earningsHistory = JSON.parse(localStorage.getItem(earningsHistoryKey)) || [];
 
-    // Show custom input when "Others" is selected
-    categorySelect.addEventListener('change', () => {
-      if (categorySelect.value === 'Others') {
-        customCategoryInput.style.display = 'block';
-      } else {
-        customCategoryInput.style.display = 'none';
-        customCategoryInput.value = '';
-      }
-    });
-
-    function renderRecords() {
-      recentGrid.innerHTML = '';
-      records.forEach((record, index) => {
-        const item = document.createElement('div');
-        item.classList.add('recent-item');
-        item.innerHTML = `
-          <div class="item-amount">₹${record.amount}</div>
-          <div class="item-category">${record.category}</div>
-          <div class="item-date">${record.date}</div>
-          <button onclick="deleteRecord(${index})" style="margin-top:10px; padding:5px 10px; border:none; background:#d32f2f; color:white; border-radius:8px; cursor:pointer;">Delete</button>
-        `;
-        recentGrid.appendChild(item);
+    function renderHistory() {
+      earningsTableBody.innerHTML = "";
+      earningsHistory.forEach(entry => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${entry.month}</td><td>₹${entry.amount}</td>`;
+        earningsTableBody.appendChild(row);
       });
     }
 
-    addBtn.addEventListener('click', () => {
-      const amount = document.querySelector('input[name="amount"]').value;
-      let category = categorySelect.value;
-      const date = document.querySelector('input[name="date"]').value;
+    saveBtn.addEventListener('click', () => {
+      const earnings = earningsInput.value.trim();
+      const month = monthInput.value.trim();
 
-      if (category === 'Others') {
-        category = customCategoryInput.value.trim();
-      }
+      if (earnings && month) {
+        // Save to history
+        const newEntry = { month, amount: earnings };
+        earningsHistory.push(newEntry);
+        localStorage.setItem(earningsHistoryKey, JSON.stringify(earningsHistory));
 
-      if (amount && category && date) {
-        const newRecord = { amount, category, date };
-        records.push(newRecord);
-        localStorage.setItem(userKey, JSON.stringify(records));
-        renderRecords();
+        // Save to global key for dashboard
+        localStorage.setItem("totalAmount", earnings);
 
-        // Reset form
-        document.querySelector('input[name="amount"]').value = '';
-        categorySelect.value = '';
-        customCategoryInput.value = '';
-        customCategoryInput.style.display = 'none';
-        document.querySelector('input[name="date"]').value = '';
+        statusMsg.textContent = `Earnings saved: ₹${earnings} (Month: ${month})`;
+        renderHistory();
       } else {
-        alert('Please fill all fields!');
+        alert("Please enter your earnings amount and select a month!");
       }
     });
 
-    function deleteRecord(index) {
-      records.splice(index, 1);
-      localStorage.setItem(userKey, JSON.stringify(records));
-      renderRecords();
-    }
-
-    // Render saved records on page load
-    renderRecords();
+    // Render saved history on load
+    renderHistory();
   </script>
 </body>
+</html>
