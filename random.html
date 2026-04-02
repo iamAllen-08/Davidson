@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monthly Earnings - Family Expense Tracker</title>
+  <title>Expense Dashboard - Family Expense Tracker</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, cyan 0%, white 100%);
+      background: linear-gradient(135deg, cyan, lightgreen);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -16,141 +15,177 @@
       padding: 20px;
     }
     .container {
-      width: 90%;
-      max-width: 600px;
-      background: rgba(255,255,255,0.25);
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(12px);
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      padding: 40px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       text-align: center;
     }
-    header { margin-bottom: 30px; }
-    header h1 { color: #0077b6; font-size: 2em; }
-    .form-group { margin-bottom: 20px; }
-    input, select {
-      width: 100%;
-      padding: 15px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-radius: 12px;
-      font-size: 16px;
-      background: rgba(255,255,255,0.3);
-      color: #000;
-      text-align: center;
+    h1 {
+      color: #004d40;
+      margin-bottom: 20px;
     }
-    input:focus, select:focus {
-      outline: none;
-      border-color: cyan;
-      box-shadow: 0 0 0 3px rgba(0,255,255,0.2);
-    }
-    .save-btn {
-      padding: 15px 30px;
-      background: rgba(0,191,255,0.8);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
+    .balance {
+      font-size: 1.5em;
       font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
+      margin: 15px 0;
     }
-    .save-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,191,255,0.4);
+    .earnings {
+      color: green;
     }
-    .nav { margin-top: 25px; }
-    .nav a {
-      text-decoration: none;
-      padding: 12px 25px;
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border-radius: 25px;
-      transition: all 0.3s;
-    }
-    .nav a:hover {
-      background: rgba(0,0,0,0.7);
-      transform: translateY(-2px);
+    .remaining {
+      color: #00695c;
     }
     .status {
+      font-size: 1.2em;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .overspend {
+      color: red;
+    }
+    .safe {
+      color: green;
+    }
+    table {
+      width: 100%;
       margin-top: 20px;
-      font-weight: 600;
-      color: #0077b6;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    th {
+      background: rgba(0,128,128,0.2);
+      color: #004d40;
+    }
+    td.expense {
+      color: red;
+      font-weight: bold;
+    }
+    td.earning {
+      color: green;
+      font-weight: bold;
+    }
+    .nav-btn {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: rgba(0, 128, 128, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: 0.3s;
+      margin: 5px;
+    }
+    .nav-btn:hover {
+      background: rgba(0, 128, 128, 0.9);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>Enter Monthly Earnings</h1>
-    </header>
-    <div class="form-group">
-      <input type="number" id="earningsInput" placeholder="Enter your monthly earnings (₹)">
-    </div>
-    <div class="form-group">
-      <select id="monthInput">
-        <option value="">Select Month</option>
-        <option>January</option>
-        <option>February</option>
-        <option>March</option>
-        <option>April</option>
-        <option>May</option>
-        <option>June</option>
-        <option>July</option>
-        <option>August</option>
-        <option>September</option>
-        <option>October</option>
-        <option>November</option>
-        <option>December</option>
-      </select>
-    </div>
-    <button class="save-btn" id="saveBtn">Save Earnings</button>
-    <div class="status" id="statusMsg"></div>
-    <div class="nav">
-      <a href="welcome.html">Back to Home</a>
-    </div>
+    <h1>Expense Dashboard</h1>
+    <div class="balance earnings" id="earningsDisplay">Total Earnings: ₹0</div>
+    <div class="balance remaining" id="remainingDisplay">Remaining Balance: ₹0</div>
+    <div class="status" id="statusMessage"></div>
+
+    <!-- Earnings History -->
+    <h2 style="color:green; margin-top:30px;">Earnings History</h2>
+    <table id="earningsTable">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Earnings (₹)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Expenses -->
+    <h2 style="color:red; margin-top:30px;">Expenses</h2>
+    <table id="expenseTable">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Amount (₹)</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <a href="random.html" class="nav-btn">Go to Earnings</a>
+    <a href="expp.html" class="nav-btn">Go to Record Expenses</a>
+    <a href="welcome.html" class="nav-btn">Back to Home</a>
   </div>
 
   <script>
-    const saveBtn = document.getElementById('saveBtn');
-    const earningsInput = document.getElementById('earningsInput');
-    const monthInput = document.getElementById('monthInput');
-    const statusMsg = document.getElementById('statusMsg');
-
-    // Get active user info
     const activeUser = JSON.parse(localStorage.getItem("userData"));
     if (!activeUser || !activeUser.email) {
       alert("No active user found. Please log in first.");
       window.location.href = "login.html";
     }
 
-    const earningsKey = `monthlyEarnings_${activeUser.email}`;
-    const monthKey = `earningsMonth_${activeUser.email}`;
+    const userKey = `expenseRecords_${activeUser.email}`;
+    let records = JSON.parse(localStorage.getItem(userKey)) || [];
 
-    // Auto-fill saved earnings and month if available
-    const savedEarnings = localStorage.getItem(earningsKey);
-    const savedMonth = localStorage.getItem(monthKey);
+    const earningsHistoryKey = `earningsHistory_${activeUser.email}`;
+    let earningsHistory = JSON.parse(localStorage.getItem(earningsHistoryKey)) || [];
 
-    if (savedEarnings) {
-      earningsInput.value = savedEarnings;
+    function renderEarnings() {
+      const tbody = document.querySelector("#earningsTable tbody");
+      tbody.innerHTML = "";
+      earningsHistory.forEach(entry => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${entry.month}</td><td class="earning">₹${entry.amount}</td>`;
+        tbody.appendChild(row);
+      });
     }
-    if (savedMonth) {
-      monthInput.value = savedMonth;
-    }
-    if (savedEarnings && savedMonth) {
-      statusMsg.textContent = `Saved earnings: ₹${savedEarnings} (Month: ${savedMonth})`;
-    }
 
-    saveBtn.addEventListener('click', () => {
-      const earnings = earningsInput.value.trim();
-      const month = monthInput.value.trim();
+    function renderExpenses() {
+      const tbody = document.querySelector("#expenseTable tbody");
+      tbody.innerHTML = "";
+      records.forEach(record => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${record.category || "—"}</td>
+          <td class="expense">₹${record.amount || 0}</td>
+          <td>${record.date || "—"}</td>
+        `;
+        tbody.appendChild(row);
+      });
 
-      if (earnings && month) {
-        localStorage.setItem(earningsKey, earnings);
-        localStorage.setItem(monthKey, month);
-        statusMsg.textContent = `Earnings saved: ₹${earnings} (Month: ${month})`;
+      const totalAmount = parseFloat(localStorage.getItem("totalAmount")) || 0;
+      const totalSpent = records.reduce((sum, r) => sum + parseFloat(r.amount || 0), 0);
+      const remaining = totalAmount - totalSpent;
+
+      document.getElementById("earningsDisplay").textContent = `Total Earnings: ₹${totalAmount}`;
+      document.getElementById("remainingDisplay").textContent = `Remaining Balance: ₹${remaining}`;
+
+      const statusMessage = document.getElementById("statusMessage");
+      if (totalSpent > totalAmount) {
+        statusMessage.textContent = `⚠ Overspending! You spent ₹${totalSpent}, which exceeds your budget of ₹${totalAmount}.`;
+        statusMessage.className = "status overspend";
       } else {
-        alert("Please enter your earnings amount and select a month!");
+        statusMessage.textContent = `✅ Safe! You spent ₹${totalSpent} out of ₹${totalAmount}.`;
+        statusMessage.className = "status safe";
       }
+
+      localStorage.setItem("remainingBalance", remaining);
+    }
+
+    window.addEventListener("load", () => {
+      renderEarnings();
+      renderExpenses();
     });
   </script>
 </body>
