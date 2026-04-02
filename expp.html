@@ -28,8 +28,7 @@ body {
   width: 90%;
   max-width: 1000px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.2); /* transparent box */
-  backdrop-filter: blur(12px); /* glass effect */
+  background: #ffffff; /* solid white */
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -37,7 +36,7 @@ body {
 
 /* Header */
 header {
-  background: rgba(0, 0, 0, 0.4); /* semi-transparent header */
+  background: #000000; /* solid black */
   color: white;
   padding: 30px;
   text-align: center;
@@ -45,7 +44,7 @@ header {
 
 .user-info {
   font-size: 1.1em;
-  opacity: 0.9;
+  opacity: 1; /* fully opaque */
   margin-top: 10px;
 }
 
@@ -65,10 +64,10 @@ input,
 select {
   width: 100%;
   padding: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid #cccccc; /* solid border */
   border-radius: 12px;
   font-size: 16px;
-  background: rgba(255, 255, 255, 0.3); /* translucent inputs */
+  background: #ffffff; /* solid background */
   color: #000;
   text-align: center;
 }
@@ -84,7 +83,7 @@ select:focus {
 .add-btn {
   grid-column: 1 / -1;
   padding: 18px;
-  background: rgba(0, 191, 255, 0.7); /* translucent cyan button */
+  background: #00bfff; /* solid cyan */
   color: white;
   border: none;
   border-radius: 12px;
@@ -102,11 +101,11 @@ select:focus {
 /* Recent Section */
 .recent-section {
   padding: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  background: #ffffff; /* solid white */
 }
 
 .recent-title {
-  color: #fff;
+  color: #000; /* solid black text */
   margin-bottom: 20px;
   font-size: 1.3em;
 }
@@ -118,7 +117,7 @@ select:focus {
 }
 
 .recent-item {
-  background: rgba(255, 255, 255, 0.3);
+  background: #f5f5f5; /* light gray solid */
   padding: 20px;
   border-radius: 12px;
   border-left: 5px solid cyan;
@@ -139,7 +138,7 @@ select:focus {
 /* Navigation Button */
 .nav-btn {
   padding: 12px 25px;
-  background: rgba(0, 0, 0, 0.5);
+  background: #000000; /* solid black */
   color: white;
   border: none;
   border-radius: 25px;
@@ -150,7 +149,7 @@ select:focus {
 }
 
 .nav-btn:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: #333333; /* darker solid */
   transform: translateY(-2px);
 }
 </style>
@@ -196,6 +195,7 @@ select:focus {
 
     <div style="text-align:center; padding:20px;">
       <a href="welcome.html" class="nav-btn">Go Back to Home</a>
+      <a href="total.html" class="nav-btn">View Records</a>
     </div>
   </div>
 
@@ -281,4 +281,3 @@ select:focus {
     renderRecords();
   </script>
 </body>
-</html>
